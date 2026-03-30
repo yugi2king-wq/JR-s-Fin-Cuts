@@ -4,23 +4,42 @@
   <title>Product</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
-<body>
+<body class="product-page">
 
 <!-- HEADER -->
 <div class="header">
-  <button onclick="goBack()" style="margin-right:10px;">←</button>
-  <h2 id="product-name"></h2>
+  <div class="header-left">
+    <img src="images/logo.png" class="logo">
+    <div class="title-box">
+      <h1>JR’s Fin Cuts</h1>
+      <p class="tagline">Fresh Seafood</p>
+    </div>
+  </div>
 </div>
 
 <div class="content">
+
+  <!-- BACK -->
+  <button onclick="goBack()" class="back-btn">← Back</button>
+
+  <!-- PRODUCT NAME -->
+  <h2 id="product-name"></h2>
 
   <!-- IMAGE SLIDER -->
   <div class="product-slider">
     <img id="img1" class="slide active">
     <img id="img2" class="slide">
     <img id="img3" class="slide">
+  </div>
+
+  <!-- DOTS -->
+  <div class="dots" id="dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
   </div>
 
   <!-- DETAILS -->
@@ -41,43 +60,36 @@
   <button class="add-btn" onclick="addProduct()">Add to Cart</button>
 
   <!-- MORE PRODUCTS -->
-  <h3 style="margin-top:30px;">More Products</h3>
-
-  <div class="more-products">
-
-    <div class="mini-card" onclick="openProduct('murrel')">
-      <img src="images/products/korameenu-1.jpg">
-      <p>Murrel</p>
-    </div>
-
-    <div class="mini-card" onclick="openProduct('tilapia')">
-      <img src="images/products/tilapia-1.jpg">
-      <p>Tilapia</p>
-    </div>
-
-    <div class="mini-card" onclick="openProduct('prawns')">
-      <img src="images/products/prawns-1.jpg">
-      <p>Prawns</p>
-    </div>
-
-  </div>
+  <h3 class="section-subtitle">More Products</h3>
+  <div class="more-products" id="more-products"></div>
 
 </div>
 
+<!-- NAVBAR -->
+<div class="bottom-nav">
+  <a href="index.html">
+    <span class="material-icons">home</span><br>Home
+  </a>
+  <a href="cart.html">
+    <span class="material-icons">shopping_cart</span>
+    <span id="cart-count" class="badge"></span>
+    <br>Cart
+  </a>
+  <a href="info.html">
+    <span class="material-icons">info</span><br>Info
+  </a>
+</div>
+
+<script src="script.js"></script>
+
 <script>
 
-// ============================
 // BACK
-// ============================
-
 function goBack() {
   window.history.back();
 }
 
-// ============================
 // PRODUCT DATA
-// ============================
-
 const products = {
   murrel: {
     name: "Murrel",
@@ -86,9 +98,9 @@ const products = {
     display: "₹600 (1kg)",
     desc: "Fresh and hygienic Murrel fish, perfect for curry and fry.",
     images: [
-      "images/products/korameenu-1.jpg",
-      "images/products/korameenu-2.jpg",
-      "images/products/korameenu-3.jpg"
+      "images/products/koramennu.png",
+      "images/products/korameenu-2.png",
+      "images/products/korameenu-3.png"
     ]
   },
   tilapia: {
@@ -98,8 +110,8 @@ const products = {
     display: "₹400 (1kg)",
     desc: "Cleaned and ready-to-cook Tilapia, soft and tasty.",
     images: [
-      "images/products/tilapia-1.jpg",
-      "images/products/tilapia-2.jpg",
+      "images/products/fish1.png",
+      "images/products/tilapia-2.png",
       "images/products/tilapia-3.jpg"
     ]
   },
@@ -110,21 +122,23 @@ const products = {
     display: "₹600 (500g)",
     desc: "Premium quality fresh prawns, cleaned and ready.",
     images: [
-      "images/products/prawns-1.jpg",
-      "images/products/prawns-2.jpg",
+      "images/products/prawns3.png",
+      "images/products/prawns-2.png",
       "images/products/prawns-3.jpg"
     ]
   }
 };
 
-// ============================
 // LOAD PRODUCT
-// ============================
-
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
-
 const product = products[id];
+
+// ✅ INVALID PRODUCT HANDLING
+if (!product) {
+  document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>Product not found</h2>";
+  throw new Error("Invalid product");
+}
 
 if (product) {
   document.getElementById("product-name").innerText = product.name;
@@ -135,60 +149,141 @@ if (product) {
   document.getElementById("img1").src = product.images[0];
   document.getElementById("img2").src = product.images[1];
   document.getElementById("img3").src = product.images[2];
+
+  document.querySelector(".qty button").disabled = true;
+
+  const moreContainer = document.getElementById("more-products");
+
+  Object.keys(products).forEach(key => {
+    if (key !== id) {
+      const item = products[key];
+
+      const div = document.createElement("div");
+      div.className = "mini-card";
+      div.onclick = () => openProduct(key);
+
+      div.innerHTML = `
+        <img src="${item.images[0]}">
+        <p>${item.name}</p>
+      `;
+
+      moreContainer.appendChild(div);
+    }
+  });
 }
 
-// ============================
 // SWITCH PRODUCT
-// ============================
-
 function openProduct(id) {
   window.location.href = "product.html?id=" + id;
 }
 
-// ============================
 // QTY
-// ============================
-
 function changeQty(val) {
   let input = document.getElementById("qty");
   let qty = parseFloat(input.value);
 
   qty += val;
-
   if (qty < 0.5) qty = 0.5;
 
   input.value = qty.toFixed(1);
+
+  const minusBtn = input.previousElementSibling;
+  minusBtn.disabled = qty <= 0.5;
 }
 
-// ============================
 // ADD TO CART
-// ============================
-
 function addProduct() {
   let qty = parseFloat(document.getElementById("qty").value);
 
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  if (isNaN(qty) || qty < 0.5) {
+    showToast("Minimum 0.5kg required");
+    return;
+  }
 
-  let existing = cart.find(item => item.name === product.name);
+  const productData = {
+    name: product.name,
+    local: product.local,
+    price: product.price,
+    qty: qty,
+    img: product.images[0]
+  };
 
-  if (existing) {
-    existing.qty += qty;
-  } else {
-    cart.push({
-      name: product.name,
-      local: product.local,
-      price: product.price,
-      qty: qty,
-      img: product.images[0]
+  addToCart(productData);
+  updateCartCount();
+  showToast("Added to Cart ✓");
+}
+
+// ============================
+// IMAGE SLIDER + DOTS + SWIPE
+// ============================
+
+window.addEventListener("load", () => {
+
+  let currentSlide = 0;
+
+  const slides = [
+    document.getElementById("img1"),
+    document.getElementById("img2"),
+    document.getElementById("img3")
+  ];
+
+  const dots = document.querySelectorAll("#dots .dot");
+
+  function showSlide(index) {
+    slides.forEach((img, i) => {
+      img.style.display = i === index ? "block" : "none";
+    });
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === index);
     });
   }
 
-  localStorage.setItem("cart", JSON.stringify(cart));
+  slides.forEach(img => {
+    img.addEventListener("click", () => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    });
+  });
 
-  alert("Added to cart");
-}
+  dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+      currentSlide = index;
+      showSlide(currentSlide);
+    });
+  });
+
+  let startX = 0;
+  let endX = 0;
+
+  slides.forEach(img => {
+
+    img.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+    });
+
+    img.addEventListener("touchend", (e) => {
+      endX = e.changedTouches[0].clientX;
+
+      if (startX - endX > 50) {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }
+
+      if (endX - startX > 50) {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+      }
+    });
+
+  });
+
+  showSlide(0);
+
+});
 
 </script>
 
+<div id="toast"></div>
 </body>
 </html>

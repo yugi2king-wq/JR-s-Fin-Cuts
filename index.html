@@ -8,11 +8,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body class="home-page">
 
 <div class="header">
   <div class="header-left">
-    <img src="images/logo.png" class="logo">
+    <img src="images/logo.jpg" class="logo">
     <div class="title-box">
       <h1>JR’s Fin Cuts</h1>
       <p class="tagline">Fresh Seafood</p>
@@ -37,19 +37,25 @@
         <img src="images/products/koramennu.png" class="single-img">
       </a>
 
-      <h3>Murrel</h3>
-      <p class="local">Korameenu</p>
-
-      <p class="price">₹600 (1kg)</p>
-      <p class="desc">Fresh and hygienic seafood</p>
-
-      <div class="qty">
-        <button class="minus">-</button>
-        <input type="number" value="0.5" min="0.5" step="0.5">
-        <button class="plus">+</button>
+      <!-- NAME + PRICE -->
+      <div class="top-row">
+        <h3>Murrel</h3>
+        <p class="price">₹600 (1kg)</p>
       </div>
 
-      <button class="add-btn">Add to Cart</button>
+      <p class="local">Korameenu</p>
+      <p class="desc">Fresh and hygienic seafood</p>
+
+      <!-- ACTION AREA -->
+      <div class="action-area">
+        <div class="qty">
+          <button class="minus">-</button>
+          <input type="number" value="0.5" min="0.5" step="0.5">
+          <button class="plus">+</button>
+        </div>
+
+        <button class="add-btn">Add to Cart</button>
+      </div>
 
     </div>
 
@@ -60,19 +66,23 @@
         <img src="images/products/fish1.png" class="single-img">
       </a>
 
-      <h3>Tilapia</h3>
-      <p class="local">Pilot Fish</p>
-
-      <p class="price">₹400 (1kg)</p>
-      <p class="desc">Cleaned and ready to cook</p>
-
-      <div class="qty">
-        <button class="minus">-</button>
-        <input type="number" value="0.5" min="0.5" step="0.5">
-        <button class="plus">+</button>
+      <div class="top-row">
+        <h3>Tilapia</h3>
+        <p class="price">₹400 (1kg)</p>
       </div>
 
-      <button class="add-btn">Add to Cart</button>
+      <p class="local">Pilot Fish</p>
+      <p class="desc">Cleaned and ready to cook</p>
+
+      <div class="action-area">
+        <div class="qty">
+          <button class="minus">-</button>
+          <input type="number" value="0.5" min="0.5" step="0.5">
+          <button class="plus">+</button>
+        </div>
+
+        <button class="add-btn">Add to Cart</button>
+      </div>
 
     </div>
 
@@ -83,19 +93,23 @@
         <img src="images/products/prawns3.png" class="single-img">
       </a>
 
-      <h3>Prawns</h3>
-      <p class="local">Royyalu</p>
-
-      <p class="price">₹600 (500g)</p>
-      <p class="desc">Premium quality seafood</p>
-
-      <div class="qty">
-        <button class="minus">-</button>
-        <input type="number" value="0.5" min="0.5" step="0.5">
-        <button class="plus">+</button>
+      <div class="top-row">
+        <h3>Prawns</h3>
+        <p class="price">₹600 (500g)</p>
       </div>
 
-      <button class="add-btn">Add to Cart</button>
+      <p class="local">Royyalu</p>
+      <p class="desc">Premium quality seafood</p>
+
+      <div class="action-area">
+        <div class="qty">
+          <button class="minus">-</button>
+          <input type="number" value="0.5" min="0.5" step="0.5">
+          <button class="plus">+</button>
+        </div>
+
+        <button class="add-btn">Add to Cart</button>
+      </div>
 
     </div>
 
@@ -109,7 +123,7 @@
   </a>
   <a href="cart.html">
     <span class="material-icons">shopping_cart</span>
-    <span id="cart-count" class="badge">0</span>
+    <span id="cart-count" class="badge"></span>
     <br>Cart
   </a>
   <a href="info.html">

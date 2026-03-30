@@ -1,3 +1,91 @@
+/* ===== BASE RESET (SAFE) ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== IMAGE BASE SYSTEM ===== */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Prevent font inconsistencies */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Improve rendering */
+body {
+  line-height: 1.4;
+}
+
+/* ===== TYPOGRAPHY SYSTEM (SAFE) ===== */
+
+/* Headings */
+h1 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Paragraphs */
+p {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* Small text (reuse existing classes safely) */
+.local,
+.desc,
+.tagline {
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+/* ===== BASE SPACING SYSTEM (SAFE) ===== */
+
+/* Section spacing */
+.section-title {
+  margin: 16px 6px 10px;
+}
+
+/* Card spacing normalization */
+.card {
+  margin-bottom: 12px;
+}
+
+/* Paragraph spacing */
+p {
+  margin: 4px 0;
+}
+
+/* Headings spacing */
+h1, h2, h3 {
+  margin: 4px 0;
+}
+
+/* Button spacing */
+button {
+  margin-top: 6px;
+}
+
+.qty button {
+  margin-top: 0;
+}
+
 /* =========================
    GLOBAL RESET
 ========================= */
@@ -41,8 +129,7 @@ html {
 
 .content {
   padding: 16px;
-  max-width: 420px;
-  margin: auto;
+  width: 100%;
 }
 
 /* =========================
@@ -125,8 +212,9 @@ html {
 ========================= */
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 14px;
+  width: 100%;
 }
 
 /* =========================
@@ -140,7 +228,9 @@ html {
   border: 1px solid rgba(0,0,0,0.03);
   box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 
-  transition: all 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  width: 100%;
 }
 
 .card:hover {
@@ -151,7 +241,7 @@ html {
 /* =========================
    IMAGE SLIDER
 ========================= */
-.slider {
+.product-slider {
   cursor: pointer;
 }
 
@@ -231,8 +321,9 @@ html {
 ========================= */
 .qty {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: 6px;
   margin: 8px 0;
 }
 
@@ -249,7 +340,6 @@ html {
 .qty input {
   width: 55px;
   text-align: center;
-  margin: 0 6px;
   border-radius: 8px;
   border: 1px solid #ddd;
   padding: 4px;
@@ -266,8 +356,10 @@ html {
 ========================= */
 button {
   font-family: 'Poppins', sans-serif;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
   -webkit-tap-highlight-color: transparent;
+
+  display: inline-block;
 }
 
 button:hover {
@@ -429,12 +521,16 @@ button:active {
   bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
+
   background: rgba(0,0,0,0.85);
   color: white;
   padding: 10px 20px;
   border-radius: 20px;
-  display: none;
   font-size: 13px;
+
+  display: none;
+  pointer-events: none;
+  z-index: 999;
 }
 
 /* =========================
@@ -453,4 +549,21 @@ button:active {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* =========================
+  PRODUCT DETAIL PAGE
+  ========================= */
+.product-img {
+  width: 100%;
+}
+
+/* ===== CLEANUP: INLINE STYLES ===== */
+
+.back-btn {
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  margin-top: 30px;
 }

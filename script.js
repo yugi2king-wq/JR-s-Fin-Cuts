@@ -37,6 +37,7 @@ function updateCartCount() {
   let badge = document.getElementById("cart-count");
   if (badge) {
     badge.innerText = count;
+    badge.style.visibility = count > 0 ? "visible" : "hidden";
   }
 }
 
@@ -116,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const localEl = card.querySelector(".local");
     const input = card.querySelector("input");
 
-    // 🔴 IMPORTANT FIX
     if (!nameEl || !localEl || !input) return;
 
     const name = nameEl.innerText.trim();
@@ -125,7 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!name || name === "undefined") return;
 
     const price = getProductPrice(name);
-
     if (price === null) return;
 
     const minusBtn = card.querySelector(".minus");
@@ -151,38 +150,10 @@ document.addEventListener("DOMContentLoaded", () => {
           local,
           price,
           qty,
-          img: card.querySelector(".slide")?.src || ""
+          img: card.querySelector(".single-img")?.src || ""
         };
 
         addToCart(product);
-      });
-    }
-
-  });
-
-  // IMAGE SLIDER
-  document.querySelectorAll(".card").forEach(card => {
-
-    let slides = card.querySelectorAll(".slide");
-    let dots = card.querySelectorAll(".dot");
-
-    let index = 0;
-
-    if (slides.length === 0) return;
-
-    let slider = card.querySelector(".slider");
-
-    if (slider) {
-      slider.addEventListener("click", () => {
-
-        slides[index].classList.remove("active");
-        if (dots[index]) dots[index].classList.remove("active");
-
-        index = (index + 1) % slides.length;
-
-        slides[index].classList.add("active");
-        if (dots[index]) dots[index].classList.add("active");
-
       });
     }
 
@@ -236,16 +207,18 @@ function renderCart() {
   const cart = getCart();
   const container = document.getElementById("cart-container");
   const totalEl = document.getElementById("total");
+  const emptyEl = document.getElementById("empty-cart");
 
   if (!container) return;
 
   container.innerHTML = "";
 
   if (cart.length === 0) {
-    container.innerHTML = "<p>Your cart is empty 🛒</p>";
+    if (emptyEl) emptyEl.style.display = "block";
     if (totalEl) totalEl.innerText = "";
-    updateCartCount();
     return;
+  } else {
+    if (emptyEl) emptyEl.style.display = "none";
   }
 
   let total = 0;
