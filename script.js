@@ -339,7 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
       desc: "Premium quality fresh prawns, cleaned and ready.",
       images: [
         "images/products/prawns.png",
-        "images/products/prawns-2.png"
+        "images/products/prawns-3.png"
       ]
     }
   };
